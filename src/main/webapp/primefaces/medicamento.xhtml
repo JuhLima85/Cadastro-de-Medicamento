@@ -1,0 +1,89 @@
+<ui:composition template="/WEB-INF/template/menuGenerico.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="corpo">
+	
+	   <h:form id="form">
+		  <p:messages autoUpdate="true" />
+		  
+		      <h:panelGrid columns="2">
+		      
+		           <p:outputLabel value="Medicamento"/>
+		           <p:inputText size="30" value="#{medicamentoMB.medicamento.nome}" required="true" label="Medicamento"/>
+		           
+		           <p:outputLabel value="Apresentação"/>
+		           <p:inputText size="30" value="#{medicamentoMB.medicamento.apresentacao}" required="true" label="Apresentação"/>
+		           
+		           <p:outputLabel value="Laboratório"/>
+		           <p:selectOneMenu value="#{medicamentoMB.medicamento.laboratorio}" required="true" label="Laboratório">
+		               <f:selectItem itemLabel="Selecione o Laboratório" noSelectionOption="true"/>
+		               <f:selectItem ietmLabel="Bayer" itemValue="BAYER"/>
+		               <f:selectItem itemLabel="Protidonaduzzi" itemValue="PROTIDONADUZZI"/>
+		               <f:selectItem itemLabel="E-MS" itemValue="E-MS"/>
+		               <f:selectItem itemLabel="Legrand" itemValue="LEGRAND"/>
+		               <f:selectItem itemLabel="Eurofarma" itemValue="EUROFARMA"/>
+		               <f:selectItem itemLabel="Cimed" itemValue="CIMED"/>
+		               <f:selectItem itemLabel="Teuto" itemValue="TEUTO"/>
+		               <f:selectItem itemLabel="Neo Química" itemValue="NEO QUÍMICA"/>
+		               <f:selectItem itemLabel="Actavis" itemValue="ACTAVIS"/>
+		               <f:selectItem itemLabel="Nova Química" itemValue="NOVA QUIÍMICA"/>
+		               <f:selectItem itemLabel="Biossintética" itemValue="BIOSSINTÉTICA"/>
+		           </p:selectOneMenu>
+		           
+		           <p:outputLabel value="Registro MS"/>
+		           <p:inputMask mask="9.9999.9999.999-9" size="13" value="#{medicamentoMB.medicamento.registro}" required="true" label="Registro MS"/>
+		           
+		           <p:outputLabel value="Preço"/>
+		           <p:inputText size="4" value="#{medicamentoMB.medicamento.preco}" required="true" label="Preço">
+		               <f:convertNumber minFractionDigits="2" locale="pt_BR" minIntegerDigits="0"/>
+		           </p:inputText>
+		           
+		           <p:outputLabel/>
+		           <p:commandButton value="Cadastrar" action="#{medicamentoMB.adicionar}" update="form tabela" style="margin-top: 10px"/>
+		      </h:panelGrid>
+		      
+		      <p:dataTable value="#{medicamentoMB.medicamentos}" var="m" id="tabela" paginator="true" rows="5" style="margin-top: 10px">
+		         <p:column headerText="Medicamento">
+		            <p:outputLabel value="#{m.nome}"/>		          
+		         </p:column>
+		         
+		         <p:column headerText="Apresentação" width="200">
+		            <p:outputLabel value="#{m.apresentacao}"/>		          
+		         </p:column>
+		         
+		         <p:column headerText="Laboratório" width="200">
+		            <p:outputLabel value="#{m.laboratorio}"/>		          
+		         </p:column>
+		         
+		         <p:column headerText="Registro MS" width="150">
+		            <p:outputLabel value="#{m.registro}"/>		          
+		         </p:column>
+		         
+		         <p:column headerText="Preço" width="100">
+		            <p:outputLabel value="#{m.preco}">
+		                <f:convertNumber type="currency" currencySymbol="R$"/>
+		            </p:outputLabel>		          
+		         </p:column>
+		         
+		         <p:column headerText="" width="100">
+		            <p:commandButton icon="ui-icon-pencil" update="tabela" process="@this">
+		                <f:setPropertyActionListener value="#{m}" target="#{medicamentoMB.medicamento}"/>		            
+		            </p:commandButton>
+		            
+		            <p:commandButton action="#{medicamentoMB.excluir}" icon="ui-icon-trash" update="tabela" process="@this">
+		                <f:setPropertyActionListener value="#{m}" target="#{medicamentoMB.medicamento}"/>		            
+		            </p:commandButton>		          
+		         </p:column>
+		         
+		      </p:dataTable>			  
+		 
+		  
+	   </h:form>
+	
+	</ui:define>
+	
+</ui:composition>
